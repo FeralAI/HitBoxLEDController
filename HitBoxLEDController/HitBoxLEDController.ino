@@ -86,19 +86,18 @@ byte * Wheel(byte position) {
 
 void setup() {
 #ifdef DEBUG
-  Serial.begin(115200);
-  while (!Serial);
-  Serial.println("Attached");
+	Serial.begin(115200);
+	while (!Serial);
+	Serial.println("Attached");
 #endif
-  
 	// Configure LEDs
 	FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, LED_COUNT);
 
 	// Set brightness
 	FastLED.setBrightness(BRIGHTNESS);
 
-  // Get saved effect state
-  selectedEffect = selectedEffectStore.read();
+	// Get saved effect state
+	selectedEffect = selectedEffectStore.read();
 
 	// Initial display
 	show();
@@ -109,7 +108,7 @@ void setup() {
 }
 
 void loop() {
-  effectChanged = false;
+	effectChanged = false;
 	switch (selectedEffect) {
 		case 0:  effectOff();                             break;
 		case 1:  effectRainbowStatic();                   break;
@@ -169,7 +168,7 @@ void setColumn(int colIndex, CRGB rgbColor) {
 	for (uint8_t i = 0; i < COLUMN_HEIGHT; i++) {
 		if (ColumnMapping[colIndex][i] != BUTTON_NONE)
 			leds[ColumnMapping[colIndex][i] * 2] = rgbColor;
-      leds[(ColumnMapping[colIndex][i] * 2) + 1] = rgbColor;
+			leds[(ColumnMapping[colIndex][i] * 2) + 1] = rgbColor;
 	}
 }
 
@@ -195,7 +194,7 @@ void setAll(CRGB rgbColor) {
 void effectOff() {
 	if (!staticOn) {
 		setAll(0, 0, 0);
-    show();
+		show();
 		staticOn = true;
 	}
 }
@@ -203,8 +202,7 @@ void effectOff() {
 void effectWhite() {
 	if (!staticOn) {
 		setAll(255, 255, 255);
-    FastLED.setBrightness(BRIGHTNESS);
-    show();
+		show();
 		staticOn = true;
 	}
 }
@@ -215,7 +213,7 @@ void effectWhite() {
 void effectRainbowChase(int delayTime) {
 	byte *c;
 	uint16_t i, j;
-	for(j = 0; j < 256 * 5; j++) { // 5 cycles of all colors on wheel
+	for (j = 0; j < 256 * 5; j++) { // 5 cycles of all colors on wheel
 		for (i = 0; i < LED_COUNT; i++) {
 			if (effectChanged)
 				return;
