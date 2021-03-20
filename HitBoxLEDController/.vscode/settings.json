@@ -1,0 +1,20 @@
+{
+	"workbench.colorCustomizations": {
+		"activityBar.background": "#02304F",
+		"titleBar.activeBackground": "#03436E",
+		"titleBar.activeForeground": "#F6FBFF"
+	},
+	"files.associations": {
+		"*.config": "xml",
+		"*.linq": "csharp",
+		"array": "cpp",
+		"istream": "cpp",
+		"memory": "cpp",
+		"tuple": "cpp",
+		"type_traits": "cpp",
+		"utility": "cpp",
+		"xlocnum": "cpp",
+		"*.tcc": "cpp",
+		"functional": "cpp"
+	}
+}
