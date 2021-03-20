@@ -20,7 +20,8 @@
 
 #define BUTTON_PIN 9
 #define BUTTON_COUNT 12
-#define LED_COUNT (BUTTON_COUNT * 2)
+#define LEDS_PER_BUTTON 2
+#define LED_COUNT (BUTTON_COUNT * LEDS_PER_BUTTON)
 #define EFFECT_COUNT 5
 #define COLUMN_COUNT 7
 #define COLUMN_HEIGHT 3
@@ -152,14 +153,13 @@ void setLED(int ledIndex, CRGB rgbColor) {
 }
 
 void setColumn(int colIndex, byte red, byte green, byte blue) {
-	for (uint8_t i = 0; i < 3; i++) {
+	for (uint8_t i = 0; i < COLUMN_HEIGHT; i++) {
 		if (ColumnMapping[colIndex][i] != BUTTON_NONE) {
-			leds[ColumnMapping[colIndex][i] * 2].r = red;
-			leds[ColumnMapping[colIndex][i] * 2].g = green;
-			leds[ColumnMapping[colIndex][i] * 2].b = blue;
-			leds[(ColumnMapping[colIndex][i] * 2) + 1].r = red;
-			leds[(ColumnMapping[colIndex][i] * 2) + 1].g = green;
-			leds[(ColumnMapping[colIndex][i] * 2) + 1].b = blue;
+			for (uint8_t j = 0; j < LEDS_PER_BUTTON; j++) {
+				leds[(ColumnMapping[colIndex][i] * LEDS_PER_BUTTON) + j].r = red;
+				leds[(ColumnMapping[colIndex][i] * LEDS_PER_BUTTON) + j].g = green;
+				leds[(ColumnMapping[colIndex][i] * LEDS_PER_BUTTON) + j].b = blue;
+			}
 		}
 	}
 }
@@ -167,8 +167,8 @@ void setColumn(int colIndex, byte red, byte green, byte blue) {
 void setColumn(int colIndex, CRGB rgbColor) {
 	for (uint8_t i = 0; i < COLUMN_HEIGHT; i++) {
 		if (ColumnMapping[colIndex][i] != BUTTON_NONE)
-			leds[ColumnMapping[colIndex][i] * 2] = rgbColor;
-			leds[(ColumnMapping[colIndex][i] * 2) + 1] = rgbColor;
+			for (uint8_t j = 0; j < LEDS_PER_BUTTON; j++)
+				leds[(ColumnMapping[colIndex][i] * LEDS_PER_BUTTON) + j] = rgbColor;
 	}
 }
 
@@ -244,30 +244,20 @@ void effectRainbowChaseColumns(int delayTime) {
 
 void effectRainbowStatic() {
 	if (!staticOn) {
-		leds[BUTTON_INDEX_UP]              = CRGB::Green;
-		leds[BUTTON_INDEX_UP + 1]          = CRGB::Green;
-		leds[BUTTON_INDEX_K1 * 2]          = CRGB::Green;
-		leds[(BUTTON_INDEX_K1 * 2) + 1]    = CRGB::Green;
-		leds[BUTTON_INDEX_K2 * 2]          = CRGB::Aqua;
-		leds[(BUTTON_INDEX_K2 * 2) + 1]    = CRGB::Aqua;
-		leds[BUTTON_INDEX_K3 * 2]          = CRGB::Blue;
-		leds[(BUTTON_INDEX_K3 * 2) + 1]    = CRGB::Blue;
-		leds[BUTTON_INDEX_K4 * 2]          = CRGB::Purple;
-		leds[(BUTTON_INDEX_K4 * 2) + 1]    = CRGB::Purple;
-		leds[BUTTON_INDEX_P4 * 2]          = CRGB::Purple;
-		leds[(BUTTON_INDEX_P4 * 2) + 1]    = CRGB::Purple;
-		leds[BUTTON_INDEX_P3 * 2]          = CRGB::Blue;
-		leds[(BUTTON_INDEX_P3 * 2) + 1]    = CRGB::Blue;
-		leds[BUTTON_INDEX_P2 * 2]          = CRGB::Aqua;
-		leds[(BUTTON_INDEX_P2 * 2) + 1]    = CRGB::Aqua;
-		leds[BUTTON_INDEX_P1 * 2]          = CRGB::Green;
-		leds[(BUTTON_INDEX_P1 * 2) + 1]    = CRGB::Green;
-		leds[BUTTON_INDEX_RIGHT * 2]       = CRGB::Yellow;
-		leds[(BUTTON_INDEX_RIGHT * 2) + 1] = CRGB::Yellow;
-		leds[BUTTON_INDEX_DOWN * 2]        = CRGB::Orange;
-		leds[(BUTTON_INDEX_DOWN * 2) + 1]  = CRGB::Orange;
-		leds[BUTTON_INDEX_LEFT * 2]        = CRGB::Red;
-		leds[(BUTTON_INDEX_LEFT * 2) + 1]  = CRGB::Red;
+		for (uint8_t i = 0; i < LEDS_PER_BUTTON; i++) {
+			leds[(BUTTON_INDEX_UP    * LEDS_PER_BUTTON) + i] = CRGB::Green;
+			leds[(BUTTON_INDEX_K1    * LEDS_PER_BUTTON) + i] = CRGB::Green;
+			leds[(BUTTON_INDEX_K2    * LEDS_PER_BUTTON) + i] = CRGB::Aqua;
+			leds[(BUTTON_INDEX_K3    * LEDS_PER_BUTTON) + i] = CRGB::Blue;
+			leds[(BUTTON_INDEX_K4    * LEDS_PER_BUTTON) + i] = CRGB::Purple;
+			leds[(BUTTON_INDEX_P4    * LEDS_PER_BUTTON) + i] = CRGB::Purple;
+			leds[(BUTTON_INDEX_P3    * LEDS_PER_BUTTON) + i] = CRGB::Blue;
+			leds[(BUTTON_INDEX_P2    * LEDS_PER_BUTTON) + i] = CRGB::Aqua;
+			leds[(BUTTON_INDEX_P1    * LEDS_PER_BUTTON) + i] = CRGB::Green;
+			leds[(BUTTON_INDEX_RIGHT * LEDS_PER_BUTTON) + i] = CRGB::Yellow;
+			leds[(BUTTON_INDEX_DOWN  * LEDS_PER_BUTTON) + i] = CRGB::Orange;
+			leds[(BUTTON_INDEX_LEFT  * LEDS_PER_BUTTON) + i] = CRGB::Red;
+		}
 		show();
 		staticOn = true;
 	}
