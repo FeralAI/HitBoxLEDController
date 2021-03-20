@@ -1,33 +1,31 @@
 #include <FastLED.h>
 #include <FlashStorage.h>
 
-/**
- * LED index to button mapping
- *               O
- * O O O O     O
- *           O
- * O O O O
- *         O
- */
+#define DEBUG
 
-// #define DEBUG
-
-// For FeatherWing OLED
+#ifdef DEBUG
+// Using a Feather M0 & FeatherWing NeoPixel for debugging
 #define DATA_PIN 6
-
-// For Seeeduino XIAO
-// #define DATA_PIN 10
-
 #define BUTTON_PIN 9
-#define BUTTON_COUNT 12
-#define LEDS_PER_BUTTON 2
-#define LED_COUNT (BUTTON_COUNT * LEDS_PER_BUTTON)
+#else
+// Using a Seeeduino XIAO and custom WS2812 chain in the controller
+#define DATA_PIN 10
+#define BUTTON_PIN 9
+#endif
+
+// Effect defines
 #define EFFECT_COUNT 12
-#define COLUMN_COUNT 7
-#define COLUMN_HEIGHT 3
 #define BRIGHTNESS 20
 #define CHASE_DELAY 10
 
+// Layout defines
+#define BUTTON_COUNT 12
+#define LEDS_PER_BUTTON 2
+#define LED_COUNT (BUTTON_COUNT * LEDS_PER_BUTTON)
+#define COLUMN_COUNT 7
+#define COLUMN_HEIGHT 3
+
+// Button defines
 #define BUTTON_INDEX_UP      0
 #define BUTTON_INDEX_K1      1
 #define BUTTON_INDEX_K2      2
@@ -42,17 +40,8 @@
 #define BUTTON_INDEX_LEFT   11
 #define BUTTON_NONE        255
 
-// Reserve a portion of flash memory to store the selected effect
-FlashStorage(selectedEffectStore, uint8_t);
-
-// State variables
-CRGB leds[LED_COUNT];
-volatile uint8_t selectedEffect = 0;
-volatile bool staticOn = false;
-volatile bool effectChanged = false;
-
 // Define mappings for HitBox button layout
-static const uint8_t ColumnMapping[COLUMN_COUNT][COLUMN_HEIGHT] = {
+const uint8_t ColumnMatrix[COLUMN_COUNT][COLUMN_HEIGHT] = {
 	{ BUTTON_INDEX_LEFT,  BUTTON_NONE,     BUTTON_NONE },
 	{ BUTTON_INDEX_DOWN,  BUTTON_NONE,     BUTTON_NONE },
 	{ BUTTON_INDEX_RIGHT, BUTTON_NONE,     BUTTON_NONE },
@@ -62,7 +51,7 @@ static const uint8_t ColumnMapping[COLUMN_COUNT][COLUMN_HEIGHT] = {
 	{ BUTTON_INDEX_P4,    BUTTON_INDEX_K4, BUTTON_NONE },
 };
 
-// Used by rainbowCycle and theaterChaseRainbow
+// Used by effectRainbowCycle
 byte * Wheel(byte position) {
 	static byte c[3];
 	
@@ -85,10 +74,23 @@ byte * Wheel(byte position) {
 	return c;
 }
 
+// State variables
+static CRGB leds[LED_COUNT];
+volatile static uint8_t selectedEffect = 0;
+volatile static bool staticOn = false;
+volatile static bool effectChanged = false;
+
+// Reserve a portion of flash memory to store the selected effect (persists through power cycle, will be reset on re-flash)
+FlashStorage(selectedEffectStore, uint8_t);
+
+// ***********************
+// ** Arduino Functions **
+// ***********************
+
 void setup() {
 #ifdef DEBUG
 	Serial.begin(115200);
-	while (!Serial);
+  delay(500);
 	Serial.println("Attached");
 #endif
 	// Configure LEDs
@@ -109,7 +111,21 @@ void setup() {
 }
 
 void loop() {
-	effectChanged = false;
+	if (effectChanged) {
+		if (selectedEffect == EFFECT_COUNT - 1)
+			selectedEffect = 0;
+    else
+      selectedEffect++;
+
+		staticOn = false;
+		selectedEffectStore.write(selectedEffect);
+    effectChanged = false;
+#ifdef DEBUG
+		Serial.print("Changed effect to ");
+		Serial.println(selectedEffect);
+#endif
+  }
+
 	switch (selectedEffect) {
 		case  0:  effectOff();                             break;
 		case  1:  effectRainbowStatic();                   break;
@@ -127,18 +143,8 @@ void loop() {
 }
 
 void changeEffect() {
-	if (digitalRead(BUTTON_PIN) == LOW) {
-		selectedEffect++;
-		if (selectedEffect >= EFFECT_COUNT)
-			selectedEffect = 0;
-#ifdef DEBUG
-		Serial.print("Changing effect to ");
-		Serial.println(selectedEffect);
-#endif
-		selectedEffectStore.write(selectedEffect);
-		staticOn = false;
+	if (digitalRead(BUTTON_PIN) == LOW)
 		effectChanged = true;
-	}
 }
 
 // *******************
@@ -161,11 +167,11 @@ void setLED(int ledIndex, CRGB rgbColor) {
 
 void setColumn(int colIndex, byte red, byte green, byte blue) {
 	for (uint8_t i = 0; i < COLUMN_HEIGHT; i++) {
-		if (ColumnMapping[colIndex][i] != BUTTON_NONE) {
+		if (ColumnMatrix[colIndex][i] != BUTTON_NONE) {
 			for (uint8_t j = 0; j < LEDS_PER_BUTTON; j++) {
-				leds[(ColumnMapping[colIndex][i] * LEDS_PER_BUTTON) + j].r = red;
-				leds[(ColumnMapping[colIndex][i] * LEDS_PER_BUTTON) + j].g = green;
-				leds[(ColumnMapping[colIndex][i] * LEDS_PER_BUTTON) + j].b = blue;
+				leds[(ColumnMatrix[colIndex][i] * LEDS_PER_BUTTON) + j].r = red;
+				leds[(ColumnMatrix[colIndex][i] * LEDS_PER_BUTTON) + j].g = green;
+				leds[(ColumnMatrix[colIndex][i] * LEDS_PER_BUTTON) + j].b = blue;
 			}
 		}
 	}
@@ -173,9 +179,9 @@ void setColumn(int colIndex, byte red, byte green, byte blue) {
 
 void setColumn(int colIndex, CRGB rgbColor) {
 	for (uint8_t i = 0; i < COLUMN_HEIGHT; i++) {
-		if (ColumnMapping[colIndex][i] != BUTTON_NONE)
+		if (ColumnMatrix[colIndex][i] != BUTTON_NONE)
 			for (uint8_t j = 0; j < LEDS_PER_BUTTON; j++)
-				leds[(ColumnMapping[colIndex][i] * LEDS_PER_BUTTON) + j] = rgbColor;
+				leds[(ColumnMatrix[colIndex][i] * LEDS_PER_BUTTON) + j] = rgbColor;
 	}
 }
 
@@ -192,7 +198,7 @@ void setAll(CRGB rgbColor) {
 }
 
 // **************************
-// ** LED Effect Functions **
+// ** Effect Functions **
 // **************************
 
 /**
