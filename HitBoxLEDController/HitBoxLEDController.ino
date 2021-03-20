@@ -22,7 +22,7 @@
 #define BUTTON_COUNT 12
 #define LEDS_PER_BUTTON 2
 #define LED_COUNT (BUTTON_COUNT * LEDS_PER_BUTTON)
-#define EFFECT_COUNT 5
+#define EFFECT_COUNT 12
 #define COLUMN_COUNT 7
 #define COLUMN_HEIGHT 3
 #define BRIGHTNESS 20
@@ -111,11 +111,18 @@ void setup() {
 void loop() {
 	effectChanged = false;
 	switch (selectedEffect) {
-		case 0:  effectOff();                             break;
-		case 1:  effectRainbowStatic();                   break;
-		case 2:  effectRainbowChase(CHASE_DELAY);         break;
-		case 3:  effectRainbowChaseColumns(CHASE_DELAY);  break;
-		case 4:  effectWhite();                           break;
+		case  0:  effectOff();                             break;
+		case  1:  effectRainbowStatic();                   break;
+		case  2:  effectRainbowChase(CHASE_DELAY);         break;
+		case  3:  effectRainbowChaseColumns(CHASE_DELAY);  break;
+		case  4:  effectStaticColor(CRGB::White);          break;
+		case  5:  effectStaticColor(CRGB::Red);            break;
+		case  6:  effectStaticColor(CRGB::Orange);         break;
+		case  7:  effectStaticColor(CRGB::Yellow);         break;
+		case  8:  effectStaticColor(CRGB::Green);          break;
+		case  9:  effectStaticColor(CRGB::Aqua);           break;
+		case 10:  effectStaticColor(CRGB::Blue);           break;
+		case 11:  effectStaticColor(CRGB::Purple);         break;
 	}
 }
 
@@ -199,9 +206,9 @@ void effectOff() {
 	}
 }
 
-void effectWhite() {
+void effectStaticColor(CRGB rgbColor) {
 	if (!staticOn) {
-		setAll(255, 255, 255);
+		setAll(rgbColor);
 		show();
 		staticOn = true;
 	}
