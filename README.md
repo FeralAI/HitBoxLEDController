@@ -4,17 +4,35 @@ Arduino RGB LED controller for Hit Box style controllers.
 
 ![Hit Box RGB LED Showcase](images/image000.jpg)
 
-## Hardware
+## Effects
+
+The list of effects are:
+
+* Static Rainbow - From Left/Red to Right/Purple
+* Rainbow Chase - Moving rainbow that follows a line from Left button across the Punch buttons, wrapping right to left across Kick buttons, then down to the Up button - kind of like a question mark shape across the Hit Box layout
+* Rainbow Chase Columns - Moving rainbow across columns of buttons, this is probably the moving rainbow effect you're looking for
+* Static Color - Select from: White, Red, Orange, Yellow, Green, Aqua, Blue, Purple
+
+## Details
+
+### Hardware
+
+![Prototype RGB Controller](images/image003.jpg)
 
 The hardware I used in my controller is:
 
-* Seeeduino XIAO (Cortex M0+ @48MHz)
+* Seeeduino XIAO Cortex M0+ @48MHz (black board)
 * 24x 5v WS2812 RGB LEDs (2 LEDs per button)
-* Logic level converter
+* Logic level converter (red board)
+* DC-DC step-up converter (blue board, only used when running from battery)
 * Breadboard or protoboard
 * 1x Tact Switch (for testing effect switching)
 * A bunch of wire, solder, some connectors and zip ties
-* A sacrificial USB-C cable 
+* A sacrificial USB-C cable
+
+The parts here cost me about $25 from Amazon, though actual total spent is more because I had to get the LEDs in a 100-pack, and I got a 3-pack of the XIAO boards to make them a bit cheaper across several projects. I'm sure some things could be had cheaper elsewhere, but price-to-convenience ratio for the Amazon stuff is off the chart.
+
+### Wiring
 
 ![Hit Box RGB Wiring](images/image005.jpg)
 
@@ -50,12 +68,3 @@ I haven't included a schematic, but wiring is straightforward:
 1. Power the XIAO from USB or some other 5v source (can boost a 3.3v VCC or 3.7v LiPo to 5v for this).
 
 The USB-C cable was cut about a foot from the USB-C connector, and is directly wired to the USB power on the controller's encoder board (Brook Wireless Fighting Board) and plugged into the XIAO. If powering via a USB port on a PC, make sure you either keep the LED current draw under 500mA (50% brightness with this setup) or the USB port supports delivering the required current.
-
-## Effects
-
-The list of effects are:
-
-* Static Rainbow - From Left/Red to Right/Purple
-* Rainbow Chase - Moving rainbow that follows a line from Left button across the Punch buttons, wrapping right to left across Kick buttons, then down to the Up button - kind of like a question mark shape across the Hit Box layout
-* Rainbow Chase Columns - Moving rainbow across columns of buttons, this is probably the moving rainbow effect you're looking for
-* Static Color - Select from: White, Red, Orange, Yellow, Green, Aqua, Blue, Purple
