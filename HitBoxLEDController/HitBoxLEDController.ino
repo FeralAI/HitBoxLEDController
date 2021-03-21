@@ -2,8 +2,9 @@
 #include <FlashStorage.h>
 
 #define DEBUG
+//#define USE_FEATHER
 
-#ifdef DEBUG
+#ifdef USE_FEATHER
 // Using a Feather M0 & FeatherWing NeoPixel for debugging
 #define DATA_PIN 6
 #define BUTTON_PIN 9
@@ -15,7 +16,7 @@
 
 // Effect defines
 #define EFFECT_COUNT 12
-#define BRIGHTNESS 20
+#define BRIGHTNESS 225 
 #define CHASE_DELAY 10
 
 // Layout defines
@@ -90,7 +91,7 @@ FlashStorage(selectedEffectStore, uint8_t);
 void setup() {
 #ifdef DEBUG
 	Serial.begin(115200);
-  delay(500);
+	delay(500);
 	Serial.println("Attached");
 #endif
 	// Configure LEDs
@@ -114,17 +115,17 @@ void loop() {
 	if (effectChanged) {
 		if (selectedEffect == EFFECT_COUNT - 1)
 			selectedEffect = 0;
-    else
-      selectedEffect++;
+		else
+			selectedEffect++;
 
 		staticOn = false;
 		selectedEffectStore.write(selectedEffect);
-    effectChanged = false;
+		effectChanged = false;
 #ifdef DEBUG
 		Serial.print("Changed effect to ");
 		Serial.println(selectedEffect);
 #endif
-  }
+	}
 
 	switch (selectedEffect) {
 		case  0:  effectOff();                             break;

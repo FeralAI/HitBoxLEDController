@@ -1,6 +1,6 @@
 {
     "sketch": "HitBoxLEDController.ino",
-    "board": "adafruit:samd:adafruit_feather_m0",
-    "configuration": "opt=small,usbstack=arduino,debug=off",
-    "port": "COM28"
+    "board": "Seeeduino:samd:seeed_XIAO_m0",
+    "configuration": "usbstack=arduino,debug=off",
+    "port": "COM14"
 }

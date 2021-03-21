@@ -10,11 +10,14 @@
                 "C:\\Users\\jskub\\Documents\\Arduino\\libraries\\**",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\**",
                 "C:\\Users\\jskub\\AppData\\Local\\Arduino15\\packages\\Seeeduino\\hardware\\samd\\1.8.1\\**",
-                "C:\\Users\\jskub\\AppData\\Local\\Arduino15\\packages\\adafruit\\hardware\\samd\\1.6.6\\**"
+                "C:\\Users\\jskub\\AppData\\Local\\Arduino15\\packages\\adafruit\\hardware\\samd\\1.6.6\\**",
+                "C:\\Users\\jskuby\\AppData\\Local\\Arduino15\\packages\\Seeeduino\\hardware\\samd\\1.8.1\\**",
+                "C:\\Users\\jskuby\\Documents\\Arduino\\libraries\\**",
+                "C:\\Users\\jskuby\\AppData\\Local\\Arduino15\\packages\\Seeeduino\\tools\\**"
             ],
             "forcedInclude": [
-                "C:\\Users\\jskub\\AppData\\Local\\Arduino15\\packages\\adafruit\\hardware\\samd\\1.6.4\\cores\\arduino\\Arduino.h",
-                "C:\\Users\\jskub\\AppData\\Local\\Arduino15\\packages\\adafruit\\hardware\\samd\\1.6.6\\cores\\arduino\\Arduino.h"
+                "C:\\Users\\jskub\\AppData\\Local\\Arduino15\\packages\\Seeeduino\\hardware\\samd\\1.8.1\\cores\\arduino\\Arduino.h",
+                "C:\\Users\\jskuby\\AppData\\Local\\Arduino15\\packages\\Seeeduino\\hardware\\samd\\1.8.1\\cores\\arduino\\Arduino.h"
             ],
             "defines": [
                 "USBCON"
