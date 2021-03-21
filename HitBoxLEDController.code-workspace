@@ -24,7 +24,8 @@
 			"utility": "cpp",
 			"xlocnum": "cpp",
 			"*.tcc": "cpp",
-			"functional": "cpp"
+			"functional": "cpp",
+			"limits": "cpp"
 		}
 	}
 }

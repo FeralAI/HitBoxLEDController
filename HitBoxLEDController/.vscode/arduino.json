@@ -2,5 +2,5 @@
     "sketch": "HitBoxLEDController.ino",
     "board": "Seeeduino:samd:seeed_XIAO_m0",
     "configuration": "usbstack=arduino,debug=off",
-    "port": "COM14"
+    "port": "COM9"
 }
