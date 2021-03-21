@@ -1,5 +1,5 @@
 /************************************************************************************
- * Hit Box RGB LED Controller
+ * HitBox RGB LED Controller
  * 
  * Some effects borrowed from:
  * https://www.tweaking4all.com/hardware/arduino/arduino-all-ledstrip-effects-in-one/

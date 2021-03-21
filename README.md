@@ -1,17 +1,22 @@
-# Hit Box LED Controller
+# HitBox LED Controller
 
-Arduino RGB LED controller for Hit Box style controllers.
+Arduino RGB LED controller for HitBox style controllers.
 
-![Hit Box RGB LED Showcase](images/image000.jpg)
+![HitBox RGB LED Showcase](images/image000.jpg)
 
 ## Effects
 
 The list of effects are:
 
 * Static Rainbow - From Left/Red to Right/Purple
-* Rainbow Chase - Moving rainbow that follows a line from Left button across the Punch buttons, wrapping right to left across Kick buttons, then down to the Up button - kind of like a question mark shape across the Hit Box layout
+* Rainbow Chase - Smooth rainbow effect that follows a line from Left button across the Punch buttons, wrapping right to left across Kick buttons, then down to the Up button - kind of like a question mark shape across the HitBox layout
 * Rainbow Chase Columns - Moving rainbow across columns of buttons, this is probably the moving rainbow effect you're looking for
 * Static Color - Select from: White, Red, Orange, Yellow, Green, Aqua, Blue, Purple
+* Moving Dot - Moves a white dot around to a random button.
+* Twinkle Random - Randomly colors a random number of dots with a random color.
+* Theater Chase - Emulates the classic chase pattern from '50s era theater marquees. White and single color change available.
+* Wipe - Colors buttons in a single line, then turns them off. White and static rainbow available.
+* Running Lights - Similar to Theater Chase, but with longer on/off transition times. White and static rainbow a available.
 
 ## Details
 
@@ -34,14 +39,14 @@ The parts here cost me about $25 from Amazon, though actual total spent is more 
 
 ### Wiring
 
-![Hit Box RGB Wiring](images/image005.jpg)
+![HitBox RGB Wiring](images/image005.jpg)
 
-Here's a wonderful text visualization of my LED chain, with `Up` being LED index 0:
+Here's a wonderful text visualization of my LED chain. This is the rear view of the HitBox layout, with `Up` being LED index 0:
 
 ```text
 ┌-P4--P3--P2--P1---┐
-|                  |
-└-K4--K3--K2--K1-┐ └-R--D--L
+|                  └-R--D--L
+└-K4--K3--K2--K1-┐
                  |
                  U--<-- From Arduino
 ```
@@ -65,6 +70,6 @@ I haven't included a schematic, but wiring is straightforward:
 1. Connect LED chain 5v to your 5v supply (can pull from XIAO 5v if running via USB).
 1. Connect LED chain ground to your supply ground.
 1. [Optional] Add a capacitor (Adafruit recommended 1000µF, I'm using much lower) to the 5v and ground connected to your LEDs chain.
-1. Power the XIAO from USB or some other 5v source (can boost a 3.3v VCC or 3.7v LiPo to 5v for this).
+1. Power the XIAO from USB-C port, or directly via the 3.3v or 5v pins.
 
-The USB-C cable was cut about a foot from the USB-C connector, and is directly wired to the USB power on the controller's encoder board (Brook Wireless Fighting Board) and plugged into the XIAO. If powering via a USB port on a PC, make sure you either keep the LED current draw under 500mA (50% brightness with this setup) or the USB port supports delivering the required current.
+The USB-C cable was cut about a foot from the USB-C connector, and is directly wired to the USB power on the controller's encoder board (Brook Wireless Fighting Board) and plugged into the XIAO. When powering with LEDs on, make sure you either keep the LED current draw under 500mA (around 50% brightness with this setup) or the USB port supports delivering the required current.
