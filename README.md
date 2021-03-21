@@ -6,17 +6,77 @@ Arduino RGB LED controller for HitBox style controllers.
 
 ## Effects
 
-The list of effects are:
+Effects can be categorized as static colors, animated effects and system layouts.
 
-* Static Rainbow - From Left/Red to Right/Purple
+### Static Colors
+
+The following static colors are available: Red, Orange, Yellow, Green, Aqua, Blue, Purple, White.
+
+A static rainbow effect also exists, and looks like:
+
+![Static Rainbow Effect](images/effects/static-rainbow.png)
+
+### Animated Effects
+
 * Rainbow Chase - Smooth rainbow effect that follows a line from Left button across the Punch buttons, wrapping right to left across Kick buttons, then down to the Up button - kind of like a question mark shape across the HitBox layout
 * Rainbow Chase Columns - Moving rainbow across columns of buttons, this is probably the moving rainbow effect you're looking for
-* Static Color - Select from: White, Red, Orange, Yellow, Green, Aqua, Blue, Purple
 * Moving Dot - Moves a white dot around to a random button.
 * Twinkle Random - Randomly colors a random number of dots with a random color.
 * Theater Chase - Emulates the classic chase pattern from '50s era theater marquees. White and single color change available.
 * Wipe - Colors buttons in a single line, then turns them off. White and static rainbow available.
 * Running Lights - Similar to Theater Chase, but with longer on/off transition times. White and static rainbow a available.
+
+### System Layouts
+
+I decided to have some fun with the RGB and emulate classic console, arcade and fighting game layouts. A black button indicates the LED is off.
+
+#### Arcade Layouts
+
+##### Neo-Geo Curved
+
+![Neo-Geo Curved](images/effects/neogeo-curved.png)
+
+##### Neo-Geo Straight
+
+![Neo-Geo Straight](images/effects/neogeo-straight.png)
+
+##### Neo-Geo Modern
+
+![Neo-Geo Modern](images/effects/neogeo-modern.png)
+
+#### Console Layouts
+
+##### PlayStation
+
+![PlayStation](images/effects/playstation.png)
+
+##### Super Famicom
+
+![Super Famicom](images/effects/super-famicom.png)
+
+##### Xbox
+
+![Xbox](images/effects/xbox.png)
+
+#### Game Layouts
+
+##### Six-button Fighter (Street Fighter, Killer Instinct, etc.)
+
+![Six-button Fighter](images/effects/six-button-fighter.png)
+
+##### Six-button Plus
+
+![Six-button Plus](images/effects/six-button-plus.png)
+
+##### Guilty Gear Type-A
+
+![Guilty Gear Type-A](images/effects/guilty-gear-type-a.png)
+
+##### Guilty Gear Custom
+
+![Guilty Gear Custom](images/effects/guilty-gear-custom.png)
+
+> NOTE: This is my custom layout similar to 6-button games
 
 ## Details
 
