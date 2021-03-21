@@ -1,0 +1,37 @@
+#ifndef _BUTTON_DEFINITIONS_
+#define _BUTTON_DEFINITIONS_
+
+// Layout defines
+#define BUTTON_COUNT 12
+#define LEDS_PER_BUTTON 2
+#define LED_COUNT (BUTTON_COUNT * LEDS_PER_BUTTON)
+#define COLUMN_COUNT 7
+#define COLUMN_HEIGHT 3
+
+// Button defines
+#define BUTTON_INDEX_UP      0
+#define BUTTON_INDEX_K1      1
+#define BUTTON_INDEX_K2      2
+#define BUTTON_INDEX_K3      3
+#define BUTTON_INDEX_K4      4
+#define BUTTON_INDEX_P4      5
+#define BUTTON_INDEX_P3      6
+#define BUTTON_INDEX_P2      7
+#define BUTTON_INDEX_P1      8
+#define BUTTON_INDEX_RIGHT   9
+#define BUTTON_INDEX_DOWN   10
+#define BUTTON_INDEX_LEFT   11
+#define BUTTON_NONE        255
+
+// Define mappings for HitBox button layout
+const uint8_t ColumnMatrix[COLUMN_COUNT][COLUMN_HEIGHT] = {
+	{ BUTTON_INDEX_LEFT,  BUTTON_NONE,     BUTTON_NONE },
+	{ BUTTON_INDEX_DOWN,  BUTTON_NONE,     BUTTON_NONE },
+	{ BUTTON_INDEX_RIGHT, BUTTON_NONE,     BUTTON_NONE },
+	{ BUTTON_INDEX_P1,    BUTTON_INDEX_K1, BUTTON_INDEX_UP },
+	{ BUTTON_INDEX_P2,    BUTTON_INDEX_K2, BUTTON_NONE },
+	{ BUTTON_INDEX_P3,    BUTTON_INDEX_K3, BUTTON_NONE },
+	{ BUTTON_INDEX_P4,    BUTTON_INDEX_K4, BUTTON_NONE },
+};
+
+#endif
